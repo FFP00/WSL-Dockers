@@ -1,0 +1,20 @@
+services:
+
+  server_node:
+    build:
+      context: .
+      dockerfile: node-dockerfile
+    image: node-alpine
+    container_name: server_node
+    ports:
+      - "5173:5173"
+      - "4173:4173"
+    volumes:
+      - ../workdir:/workdir
+    networks: 
+      - NODE_NETWORK
+    working_dir: /workdir
+
+networks:
+  NODE_NETWORK:
+    driver: bridge

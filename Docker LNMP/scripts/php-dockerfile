@@ -1,0 +1,19 @@
+# Imagen base de PHP con FPM
+FROM php:fpm-alpine
+
+# Dependencias esenciales para extensiones de PHP y Composer
+RUN apk add --no-cache \
+    git \
+    unzip \
+    zip \
+    curl \
+    libzip \
+    libzip-dev \
+    && docker-php-ext-install pdo pdo_mysql zip bcmath \
+    && apk del libzip-dev
+
+# Instalar Composer (copiado desde la imagen oficial)
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Comando que se iniciara siempre al principio
+CMD ["php-fpm"]
