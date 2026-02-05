@@ -13,4 +13,4 @@ $COMPOSE_NAME = "X"
     Start-Process powershell -ArgumentList "-ExecutionPolicy Bypass -File `"$rutaLifter`"" -Wait
 
     # Cuando acaba el script hace un node compose down
-    docker compose -p "$COMPOSE_NAME" down
+    docker compose -p $COMPOSE_NAME down
