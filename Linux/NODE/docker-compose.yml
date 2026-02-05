@@ -10,11 +10,11 @@ services:
       - "5173:5173"
       - "4173:4173"
     volumes:
-      - ../workdir:/workdir
+      - ./workdir:/workdir
     networks: 
-      - NODE_NETWORK
+      - node_network
     working_dir: /workdir
 
 networks:
-  NODE_NETWORK:
+  node_network:
     driver: bridge
