@@ -16,7 +16,7 @@ services:
     volumes:
       - database_data:/var/lib/mysql
     networks: 
-      - lemp_stack_network
+      - ${CHANGE}_network
 
   app_php:
     build:
@@ -32,7 +32,7 @@ services:
     depends_on:
       - database
     networks: 
-      - lemp_stack_network
+      - ${CHANGE}_network
     working_dir: /var/www/html
 
   web_server:
@@ -47,12 +47,12 @@ services:
     depends_on:
       - app_php
     networks: 
-      - lemp_stack_network
+      - ${CHANGE}_network
 
 volumes:
   database_data:
 
 networks:
-  lemp_stack_network:
-    name: lemp_stack_network
+  ${CHANGE}_network:
+    name: ${CHANGE}_network
     driver: bridge

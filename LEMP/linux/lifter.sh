@@ -14,8 +14,7 @@ code ./workdir
 docker compose -p "$COMPOSE_NAME" up --build -d
 
 # Entrar al contenedor principal
-docker exec -it "$CONTAINER_SHELL" sh
+docker exec -it "$CONTAINER_SHELL" bash
 
 # Salir
 exit
-

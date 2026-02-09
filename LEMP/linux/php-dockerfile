@@ -1,19 +1,21 @@
 # Imagen base de PHP con FPM
-FROM php:fpm-alpine
+FROM php:8.3-fpm-bookworm
 
-# Dependencias esenciales para extensiones de PHP y Composer
-RUN apk add --no-cache \
-    git \
-    unzip \
-    zip \
-    curl \
-    libzip \
-    libzip-dev \
-    && docker-php-ext-install pdo pdo_mysql zip bcmath \
-    && apk del libzip-dev
+# Instalar dependencias mínimas necesarias para Laravel
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        git \
+        unzip \
+        zip \
+        curl \
+        libzip-dev \
+    && docker-php-ext-install pdo_mysql zip bcmath \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Instalar Composer (copiado desde la imagen oficial)
+RUN echo 'PS1="\w # "' >> /etc/bash.bashrc
+
+# Instalar Composer desde la imagen oficial
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Comando que se iniciara siempre al principio
+# Comando por defecto
 CMD ["php-fpm"]

@@ -1,5 +1,5 @@
-Import-Module "$PSScriptRoot\configLoader.psm1"
-$config = Get-Config "$PSScriptRoot\..\.env"
+Import-Module "$PSScriptRoot\readDotEnv.psm1"
+$env = Read-DotEnv -Path "$PSScriptRoot\..\.env"
 
 # Obtiene la ruta desde donde se está llama actualmente a este script
 $ruta = Split-Path -Parent $MyInvocation.MyCommand.Definition
@@ -11,4 +11,4 @@ $rutaLifter = Join-Path $ruta "containerLifter.ps1"
 Start-Process powershell -ArgumentList "-ExecutionPolicy Bypass -File `"$rutaLifter`"" -Wait
 
 # Cuando acaba el script hace un node compose down
-docker compose -p $config["COMPOSE_NAME"] down
+docker compose -p $env["COMPOSE_NAME"] down
