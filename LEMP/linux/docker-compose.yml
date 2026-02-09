@@ -14,7 +14,7 @@ services:
     volumes:
       - bdd_mysql_data:/var/lib/mysql
     networks: 
-      - lnmp_network
+      - lemp_stack_network
 
   app_php:
     build:
@@ -30,7 +30,7 @@ services:
     depends_on:
       - bdd_mysql
     networks: 
-      - lnmp_network
+      - lemp_stack_network
     working_dir: /var/www/html
 
   server_nginx:
@@ -45,11 +45,11 @@ services:
     depends_on:
       - app_php
     networks: 
-      - lnmp_network
+      - lemp_stack_network
 
 volumes:
   bdd_mysql_data:
 
 networks:
-  lnmp_network:
+  lemp_stack_network:
     driver: bridge
