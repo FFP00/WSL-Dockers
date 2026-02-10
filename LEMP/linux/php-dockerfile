@@ -4,15 +4,13 @@ FROM php:8.3-fpm-bookworm
 # Instalar dependencias mínimas necesarias para Laravel
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        git \
         unzip \
         zip \
         curl \
         libzip-dev \
     && docker-php-ext-install pdo_mysql zip bcmath \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-RUN echo 'PS1="\w # "' >> /etc/bash.bashrc
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && echo 'PS1="\w # "' >> /etc/bash.bashrc
 
 # Instalar Composer desde la imagen oficial
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer

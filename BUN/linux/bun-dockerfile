@@ -1,0 +1,11 @@
+# Imagen base de Bun en Debian
+FROM oven/bun:debian
+
+# Crear alias y personalizar el entorno bash
+RUN echo "alias bun-run-dev='bun run dev --host 0.0.0.0'" >> /etc/bash.bashrc \
+    && echo "alias bun-run-preview='bun run preview --host 0.0.0.0'" >> /etc/bash.bashrc \
+    && echo 'PS1="\w # "' >> /home/bun/.bash_aliases \
+    && chown bun:bun /home/bun/.bash_aliases
+
+# Comando que mantiene el contenedor vivo
+CMD ["tail", "-f", "/dev/null"]

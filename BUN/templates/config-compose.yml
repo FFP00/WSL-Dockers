@@ -1,0 +1,23 @@
+# 
+services:
+
+  ${CONTAINER_SHELL}:
+    build:
+      context: .
+      dockerfile: bun-dockerfile
+    image: bun-debian
+    container_name: ${CONTAINER_SHELL}
+    user: "${UID}:${GID}"
+    ports:
+      - "5173:5173"
+      - "4173:4173"
+    volumes:
+      - ./workdir:/workdir
+    networks: 
+      - ${COMPOSE_NAME}_network
+    working_dir: /workdir
+
+networks:
+  ${COMPOSE_NAME}_network:
+    name: ${COMPOSE_NAME}_network
+    driver: bridge

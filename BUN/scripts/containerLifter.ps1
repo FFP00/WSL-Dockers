@@ -15,16 +15,13 @@ $uID        = wsl -d Debian bash -lc "id -u"
 $gID        = wsl -d Debian bash -lc "id -g"
 
 # --- Asignar rutas varias ---
-$rutaWSL            = "\\wsl$\Debian\home\$userWSL" + ($rutaPWD -replace "/", "\")
-$rutaLinux          = "$PSScriptRoot\..\linux"
+$rutaWSL                = "\\wsl$\Debian\home\$userWSL" + ($rutaPWD -replace "/", "\")
+$rutaLinux              = "$PSScriptRoot\..\linux"
 
-$rutaConfigCompose  = "$PSScriptRoot\..\templates\config-compose.yml"
-$rutaDockerCompose  = "$PSScriptRoot\..\linux\docker-compose.yml"
+$rutaConfigCompose      = "$PSScriptRoot\..\templates\config-compose.yml"
+$rutaDockerCompose      = "$PSScriptRoot\..\linux\docker-compose.yml"
 
-$rutaConfigNGINX    = "$PSScriptRoot\..\templates\config-nginx.conf"
-$rutaDefaultConfig  = "$PSScriptRoot\..\linux\default.conf"
-
-$rutaENV            = "$PSScriptRoot\..\.env"
+$rutaENV                = "$PSScriptRoot\..\.env"
 
 # --- Generar docker-compose.yml desde plantilla ---
 (Get-Content $rutaConfigCompose -Raw) `
@@ -33,11 +30,6 @@ $rutaENV            = "$PSScriptRoot\..\.env"
     -replace '\$\{UID\}', $uID `
     -replace '\$\{GID\}', $gID |
     Set-Content $rutaDockerCompose
-
-# --- Generar default.conf desde plantilla ---
-(Get-Content $rutaConfigNGINX -Raw) `
-    -replace '\$\{CONTAINER_SHELL\}', $containerShell |
-    Set-Content $rutaDefaultConfig
 
 # --- Copiar .env a la carpeta linux ---
 Copy-Item "$rutaENV" "$rutaLinux\.env" -Force

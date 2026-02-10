@@ -1,0 +1,23 @@
+# 
+services:
+
+  app_bun:
+    build:
+      context: .
+      dockerfile: bun-dockerfile
+    image: bun-debian
+    container_name: app_bun
+    user: "1000:1000"
+    ports:
+      - "5173:5173"
+      - "4173:4173"
+    volumes:
+      - ./workdir:/workdir
+    networks: 
+      - bun_stack_network
+    working_dir: /workdir
+
+networks:
+  bun_stack_network:
+    name: bun_stack_network
+    driver: bridge
