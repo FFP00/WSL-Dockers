@@ -128,3 +128,7 @@ Desde la nueva pestaña nos conectamos a `Debian` mediante la flecha.
     Es importante decir que todos los comandos que empezaban por npm ahora empiezan por bun.
     
     Además, ahora cuando se cree un proyecto ( bun create vite@latest ) y se inicie automáticamente, habrá que cerrarlo ( q + Enter ), e introducir alguno de los alias antes mencionados.
+
+*¿Cómo funciona específicamente esto?* 
+
+    Todos los scripts están comentados para que se entienda su funcionamiento, así que si tienes ganas puedes mirar exactamente qué hace.
