@@ -74,19 +74,19 @@ sudo apt install git
 
 1. Dentro de `Docker Desktop` abrimos ajustes ( _Arriba a la derecha_ ).
 
-    ![1](/public/img/1.png)
+    ![11](/public/img/1.png)
 
 2. Entramos en `Resources`.
 
-    ![2](/public/img/2.png)
+    ![22](/public/img/2.png)
 
 3. Vamos hacia la pestaña de `WSL integration`. 
 
-    ![3](/public/img/3.png)
+    ![33](/public/img/3.png)
 
 4. Activamos la integración con `Debian`.
 
-    ![4](/public/img/4.png)
+    ![44](/public/img/4.png)
 
 # _**STEP 4**_
 **U**tilizamos la extensión oficial de Microsoft para trabajar con `WSL` desde `VS Code`.
@@ -96,7 +96,7 @@ sudo apt install git
 
 Desde la nueva pestaña nos conectamos a `Debian` mediante la flecha.
 
-![5](/public/img/5.png)
+![55](/public/img/5.png)
 
 # _**STEP 5**_
 **I**dentificamos y asignamos los atributos a los `.env`.
