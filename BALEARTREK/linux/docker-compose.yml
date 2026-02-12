@@ -1,0 +1,62 @@
+# 
+
+services:
+
+  database:
+    image: mariadb:10.11
+    container_name: database
+    ports:
+      - "127.0.0.1:3306:3306"
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DATABASE_SCHEMA}
+      MARIADB_USER: ${DATABASE_USER}
+      MARIADB_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - database_data:/var/lib/mysql
+    networks: 
+      - baleartrek_stack_network
+
+  app_php:
+    build:
+      context: .
+      dockerfile: Dockerfile-PHP-BUN
+    image: php-8.3-fpm-bookworm
+    container_name: app_php
+    user: "1000:101"
+    ports:
+      - "9000:9000"
+      - "8000:8000"
+      - "5173:5173"
+      - "4173:4173"
+    restart: always
+    volumes:
+      - ./workdir:/var/www/html
+    depends_on:
+      - database
+    networks: 
+      - baleartrek_stack_network
+    working_dir: /var/www/html
+
+  web_server:
+    image: nginx:1.26-alpine
+    container_name: web_server
+    ports:
+      - "80:80"
+    restart: always
+    volumes:
+      - ./workdir:/var/www/html
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app_php
+    networks: 
+      - baleartrek_stack_network
+
+volumes:
+  database_data:
+
+networks:
+  baleartrek_stack_network:
+    name: baleartrek_stack_network
+    driver: bridge

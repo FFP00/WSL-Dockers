@@ -1,0 +1,41 @@
+# Stage para obtener Bun
+FROM oven/bun:debian AS bunstage
+
+# Imagen de PHP
+FROM php:8.3-fpm-bookworm
+
+# INSTALACIÓN
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        unzip \
+        zip \
+        libzip-dev \
+        ca-certificates \
+    \
+    # Extensiones PHP necesarias para Laravel
+    && docker-php-ext-install pdo_mysql zip bcmath \
+    \
+    # Limpiar
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Composer desde imagen oficial
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Bun desde imagen stage de la imagen oficial
+COPY --from=bunstage /usr/local/bin/bun /usr/local/bin/bun
+
+# Crear carpeta y symlink para quien busque node o npm llegue a bun
+RUN ln -s /usr/local/bin/bun /usr/local/bin/node \
+    && ln -s /usr/local/bin/bun /usr/local/bin/npm
+
+# USUARIO, GRUPO, ALIAS Y PROMPT
+RUN groupadd -g 101 nginx || true \
+    && useradd -m -u ${UID} -g 101 -s /bin/bash ${userWSL} \
+    \
+    # Alias útiles
+    && echo "alias php-artisan-serve='php artisan serve --host 0.0.0.0'" >> /home/${userWSL}/.bashrc \
+    && echo "alias bun-run-dev='bun run dev --host 0.0.0.0'" >> /home/${userWSL}/.bashrc \
+    && echo "alias bun-run-preview='bun run preview --host 0.0.0.0'" >> /home/${userWSL}/.bashrc \
+    \
+    # Prompt personalizado
+    && echo 'PS1="\w # "' >> /home/${userWSL}/.bashrc
