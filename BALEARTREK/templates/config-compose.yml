@@ -27,9 +27,6 @@ services:
     user: "${UID}:101"
     ports:
       - "9000:9000"
-      - "8000:8000"
-      - "5173:5173"
-      - "4173:4173"
     restart: always
     volumes:
       - ./workdir:/var/www/html
