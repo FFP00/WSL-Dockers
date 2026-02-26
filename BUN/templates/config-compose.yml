@@ -9,7 +9,7 @@ services:
     container_name: ${CONTAINER_SHELL}
     user: "${UID}:${GID}"
     ports:
-      - "5173:5173"
+      - "8080:5173"
       - "4173:4173"
     volumes:
       - ./workdir:/workdir
